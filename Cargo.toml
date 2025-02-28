@@ -2,10 +2,10 @@
 name = "{{project-name}}"
 version = "0.1.0"
 authors = ["Barlog <barlog@tanelorn.li>"]
-edition = "2021"
+edition = "2024"
 
 [dependencies]
-bevy = { version = "0.14", features = ["wayland"] }
+bevy = { version = "0.15", features = ["wayland"] }
 
 [profile.dev]
 opt-level = 1
