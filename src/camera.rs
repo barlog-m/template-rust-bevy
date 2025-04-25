@@ -1,4 +1,4 @@
-use bevy::core_pipeline::bloom::BloomSettings;
+use bevy::core_pipeline::bloom::Bloom;
 use bevy::core_pipeline::tonemapping::Tonemapping;
 use bevy::prelude::*;
 
@@ -12,14 +12,12 @@ impl Plugin for CameraPlugin {
 
 fn spawn_camera(mut commands: Commands) {
     commands.spawn((
-        Camera2dBundle {
-            camera: Camera {
-                hdr: true,
-                ..default()
-            },
-            tonemapping: Tonemapping::TonyMcMapface,
+        Camera2d,
+        Camera {
+            hdr: true,
             ..default()
         },
-        BloomSettings::default(),
+        Tonemapping::TonyMcMapface,
+        Bloom::default(),
     ));
 }
