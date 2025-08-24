@@ -22,11 +22,3 @@ impl WindowSize {
         }
     }
 }
-
-#[derive(Resource)]
-pub struct ShipSize {
-    pub width: f32,
-    pub width_half: f32,
-    pub height: f32,
-    pub height_half: f32,
-}
