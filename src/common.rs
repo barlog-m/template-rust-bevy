@@ -1,8 +1,8 @@
 use bevy::diagnostic::{DiagnosticsStore, FrameTimeDiagnosticsPlugin};
 use bevy::prelude::*;
 
-/*
 const OCEANIC_WHITE: LinearRgba = LinearRgba::rgb(0.52, 0.56, 0.62);
+/*
 const OCEANIC_BLACK: LinearRgba = LinearRgba::rgb(0.01, 0.02, 0.03);
 const OCEANIC_GRAY: LinearRgba = LinearRgba::rgb(0.13, 0.17, 0.20);
 const OCEANIC_RED: LinearRgba = LinearRgba::rgb(0.85, 0.11, 0.13);
@@ -31,13 +31,13 @@ struct FpsText;
 
 fn setup(mut commands: Commands) {
     commands.spawn((
-        Text::new("FPS: "),
+        Text::new("-1 fps -1 ms/frame"),
         TextFont {
             font: default(),
             font_size: 20.0,
             ..Default::default()
         },
-        TextColor(Color::BLACK),
+        TextColor(Color::from(OCEANIC_WHITE)),
         FpsText,
     ));
 }
@@ -48,9 +48,17 @@ fn update_fps_text(
 ) {
     for mut text in &mut query {
         if let Some(fps) = diagnostics.get(&FrameTimeDiagnosticsPlugin::FPS) {
-            if let Some(value) = fps.smoothed() {
-                text.clear();
-                text.push_str(&format!("FPS: {value:.2}"));
+            if let Some(fps_value) = fps.smoothed() {
+                if let Some(time) =
+                    diagnostics.get(&FrameTimeDiagnosticsPlugin::FRAME_TIME)
+                {
+                    if let Some(time_value) = time.smoothed() {
+                        text.clear();
+                        text.push_str(&format!(
+                            "{fps_value:.2} fps {time_value:.2} ms/frame"
+                        ));
+                    }
+                }
             }
         }
     }
